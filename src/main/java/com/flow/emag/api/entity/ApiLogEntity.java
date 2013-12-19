@@ -25,10 +25,10 @@ public class ApiLogEntity {
 	@Column(name="emag_resource")
 	private String emagResource;
 	
-	@Column(name="input_json")
+	@Column(name="input_json",columnDefinition="CLOB")
 	private String inputJson;
 	
-	@Column(name="response_json")
+	@Column(name="response_json",columnDefinition="CLOB")
 	private String responseJson;
 	
 	@Column(name="start_time")
@@ -37,7 +37,7 @@ public class ApiLogEntity {
 	@Column(name="end_time")
 	private Date endTime;
 	
-	@Column(name="client_exception")
+	@Column(name="client_exception",columnDefinition="CLOB")
 	private String exception;
 
 	public Long getId() {

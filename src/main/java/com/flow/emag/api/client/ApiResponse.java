@@ -24,7 +24,9 @@ public class ApiResponse<T> {
 	
 	@SerializedName("results")
 	private List<T> results;
-
+	
+	private String sourceJson;
+	
 	public boolean isError() {
 		return isError;
 	}
@@ -53,6 +55,16 @@ public class ApiResponse<T> {
 	public String toString() {
 		return "ApiResponse [isError=" + isError + ", messages="
 				+ Arrays.toString(messages) + ", results=" + results + "]";
+	}
+	
+	
+	
+	public String getSourceJson() {
+		return sourceJson;
+	}
+
+	public void setSourceJson(String sourceJson) {
+		this.sourceJson = sourceJson;
 	}
 
 	public static void main(String[] args) throws Exception{

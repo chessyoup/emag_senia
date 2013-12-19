@@ -28,24 +28,29 @@ public class EmagClient {
 		
 		try {
 			ApiCountResponse countBrands = emagApiClient.countResource(Brand.class);
+			apiLog.setResponseJson(countBrands.getSourceJson());
 			LOG.info("countBrands :: "+countBrands.toString());
+			saveLog(apiLog);
 			
 			for( int i = 1 ; i<=countBrands.getResults().getNoOfPages(); i++ ){
+				apiLog = Util.createApiLog("brand",EmagAction.READ.toString(), "{\"page\":\""+i+"\"");
 				ApiResponse<Brand> brands =  emagApiClient.readResources(Brand.class,new ResourceFilter(i, countBrands.getResults().getItemsPerPage()));
+				apiLog.setResponseJson(brands.getSourceJson());
 				
 				if(brands.getResults() != null && brands.getResults().size() > 0 ){
 					for(Brand brand :brands.getResults()){
 						persistenceLayer.save(Convertor.brandModelToEntity(brand));	
 					}										
 				}
+				
+				saveLog(apiLog);
 			}
 			
 		} catch (Exception e) {			
 			LOG.log(Level.SEVERE, "Error on counting brands!");
 			apiLog.setException(Util.exceptionToString(e));
 		}
-		
-		saveLog(apiLog);
+				
 		persistenceLayer.closeSession();
 	}
 	
@@ -152,13 +157,20 @@ public class EmagClient {
 	
 	public static void newOrder(String orderId){
 		persistenceLayer.openSession();		
-		ApiLogEntity apiLog = Util.createApiLog("orders",EmagAction.READ.toString(), "{read:orders}");
+		ApiLogEntity apiLog = Util.createApiLog("order",EmagAction.READ.toString(), "{\"id\":"+orderId+"\"}");
 		
 		try {
 			ApiResponse<Order> order = emagApiClient.readResourceByEmagId(Order.class, orderId);
-			
+							
 			if( order != null){
+				apiLog.setResponseJson(order.getSourceJson());
 				
+				if( order.getResults().size() > 0 ){
+					persistenceLayer.save(Convertor.orderModelToEntity(order.getResults().get(0)));
+				}
+				else{
+					apiLog.setException("Emtpy order list!");
+				}
 			}
 			
 		} catch (Exception e) {
@@ -181,6 +193,8 @@ public class EmagClient {
 //		EmagClient.updateBrands();
 //		EmagClient.updateCategories();
 //		EmagClient.sendOffer("3");
-		EmagClient.updateProducts();		
+//		EmagClient.updateProducts();
+		EmagClient.newOrder("2254891");
+		EmagClient.newOrder("2254891");
 	}
 }

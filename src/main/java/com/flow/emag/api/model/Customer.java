@@ -1,131 +1,98 @@
 package com.flow.emag.api.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity
-@Table( name = "customers" )
 @EmagResource(name="customer")
 public class Customer {
-	
-	@Id
-	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
-	@SerializedName("id")
-	private Long id;	
 		
-	@Column(name="mkt_id")
+	@SerializedName("id")
+	@Expose
+	private String id;	
+			
 	@SerializedName("mkt_id")
 	@Expose
 	public Integer mktId;
-	
-	@Column
+		
 	@SerializedName("name")
 	@Expose
 	public String name;
-	
-	@Column
+		
 	@SerializedName("company")
 	@Expose
 	public String company;
 			
-	@Column
 	@SerializedName("gender")
 	@Expose
 	public String gender;
-	
-	@Column
+		
 	@SerializedName("phone_1")
 	@Expose
 	public String phone_1;
-	
-	@Column
+		
 	@SerializedName("phone_2")
 	@Expose
 	public String phone_2;
-			
-	@Column
+				
 	@SerializedName("phone_3")
 	@Expose
 	public String phone_3;
-			
-	@Column(name="registration_number")
+				
 	@SerializedName("registration_number")
 	@Expose
 	public String registration_number;
 			
-	@Column
 	@SerializedName("code")	
 	@Expose
 	public String code;
 	
-	@Column
 	@SerializedName("email")
 	@Expose
 	public String email;
-	
-	@Column(name="billing_country")
+		
 	@SerializedName("billing_country")
 	@Expose
 	public String billingCountry;
-			
-	@Column(name="billing_suburb")
+				
 	@SerializedName("billing_suburb")	
 	@Expose
 	public String billingSuburb;
-			
-	@Column(name="billing_city")
+				
 	@SerializedName("billing_city")
 	@Expose
 	public String billingCity;
-	
-	@Column(name="billing_street")
+		
 	@SerializedName("billing_street")
 	@Expose
 	public String billingStreet;
-	
-	@Column(name="billing_postal_code")
+		
 	@SerializedName("billing_postal_code")
 	@Expose
 	public String billingPostalCode;
-	
-	@Column(name="shipping_country")
+		
 	@SerializedName("shipping_country")	
 	@Expose
 	public String shippingCountry;
-	
-	@Column(name="shipping_suburb")
+		
 	@SerializedName("shipping_suburb")
 	@Expose
 	public String shippingSuburb;
-	
-	@Column(name="shipping_city")
+		
 	@SerializedName("shipping_city")
 	@Expose
 	public String shippingCity;
-	
-	@Column(name="shipping_street")
+		
 	@SerializedName("shipping_street")	
 	@Expose
 	public String shippingStreet;
-			
-	@Column(name="shipping_postal_code")
+				
 	@SerializedName("shipping_postal_code")
 	@Expose
 	public String shippingPostal_Code;		
 	
 	/**
 	 * Sample 2011-06-06 15:04:52
-	 */
-	@Column
+	 */	
 	@SerializedName("created")
 	@Expose
 	public String created;
@@ -133,16 +100,14 @@ public class Customer {
 	/**
 	 * Sample 2011-06-06 15:04:52
 	 */
-	@SerializedName("created")	
-	@Column
+	@SerializedName("modified")		
 	@Expose
 	public String modified;
 	
 	@SerializedName("bank")
 	@Expose
 	public String bank;
-	
-	@Column
+		
 	@SerializedName("iban")
 	@Expose
 	public String iban;
@@ -150,22 +115,28 @@ public class Customer {
 	/**
 	 * 0 for persoana fizica
 	 * 1 for tpersoana juridica
-	 */
-	@Column(name="is_juridical")
+	 */	
 	@SerializedName("is_juridical")
 	@Expose
 	public Integer isJuridical;
 	
-	@Column
+	/**
+	 * 0 for persoana fizica
+	 * 1 for tpersoana juridica
+	 */	
+	@SerializedName("is_vat_payer")
+	@Expose
+	public Integer isVatPayer;
+	
 	@SerializedName("fax")
 	@Expose
 	public String fax;
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

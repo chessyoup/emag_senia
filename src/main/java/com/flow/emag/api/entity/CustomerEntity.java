@@ -4,19 +4,26 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table( name = "customers" )
+@Table( name = "order_customer" )
 public class CustomerEntity {
 	
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")	
 	private Long id;	
-		
+	
+	@OneToOne
+	private OrderEntity order;
+	
+	@Column(name="emag_id")
+	private String emagId;
+	
 	@Column(name="mkt_id")		
 	public Integer mktId;
 	
@@ -102,6 +109,9 @@ public class CustomerEntity {
 	@Column(name="is_juridical")	
 	public Integer isJuridical;
 	
+	@Column(name="is_vat_payer")	
+	public Integer isVatPayer;
+	
 	@Column	
 	public String fax;
 	
@@ -127,6 +137,16 @@ public class CustomerEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	
+	
+	public OrderEntity getOrder() {
+		return order;
+	}
+
+	public void setOrder(OrderEntity order) {
+		this.order = order;
 	}
 
 	public String getCompany() {
@@ -159,6 +179,14 @@ public class CustomerEntity {
 
 	public void setPhone_2(String phone_2) {
 		this.phone_2 = phone_2;
+	}		
+	
+	public String getEmagId() {
+		return emagId;
+	}
+
+	public void setEmagId(String emagId) {
+		this.emagId = emagId;
 	}
 
 	public String getPhone_3() {
@@ -319,6 +347,14 @@ public class CustomerEntity {
 
 	public void setFax(String fax) {
 		this.fax = fax;
+	}
+	
+	public Integer getIsVatPayer() {
+		return isVatPayer;
+	}
+
+	public void setIsVatPayer(Integer isVatPayer) {
+		this.isVatPayer = isVatPayer;
 	}
 
 	@Override

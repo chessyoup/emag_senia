@@ -15,7 +15,9 @@ public class ApiCountResponse {
 	
 	@SerializedName("results")
 	private ResourceCount results;
-
+	
+	private String sourceJson;
+	
 	public String getIsError() {
 		return isError;
 	}
@@ -38,6 +40,14 @@ public class ApiCountResponse {
 
 	public void setResults(ResourceCount results) {
 		this.results = results;
+	}
+	
+	public String getSourceJson() {
+		return sourceJson;
+	}
+
+	public void setSourceJson(String sourceJson) {
+		this.sourceJson = sourceJson;
 	}
 
 	@Override

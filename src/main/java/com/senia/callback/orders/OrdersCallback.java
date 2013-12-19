@@ -27,16 +27,11 @@ public class OrdersCallback extends HttpServlet {
 		this.handleCallback(req, resp);
 	}
 	
-	private void handleCallback(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		System.out.println( "host ma "+req.getRemoteHost());
-		
-		if( Environment.getProperty("emag_ip").equals(req.getRemoteHost())){
-			System.out.println( "pare brici si ok");
-			
+	private void handleCallback(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{				
+		if( Environment.getProperty("emag_ip").equals(req.getRemoteHost())){			
 			String id = req.getParameter(Environment.getProperty("emag_order_id_key"));
 			
-			if( id != null ){
-				System.out.println( "avem si id");
+			if( id != null ){				
 				EmagClient.newOrder(id);
 			}						
 		}

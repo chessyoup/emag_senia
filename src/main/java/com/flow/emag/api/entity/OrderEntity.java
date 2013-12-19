@@ -3,8 +3,10 @@ package com.flow.emag.api.entity;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -53,7 +55,10 @@ public class OrderEntity {
 	 *	Required. Integer.
 	 */
 	@Column(name="payment_mode_id")
-	private Integer paymentMode;
+	private Integer paymentModeId;
+	
+	@Column(name="payment_mode")
+	private String paymentMode;
 	
 	/**
 	 * Additional customer notes
@@ -67,7 +72,7 @@ public class OrderEntity {
 	 * Optional. Text in YYYY-mm-dd HH:ii:ss format.
 	 */
 	@Column
-	private String date;
+	private String createDate;
 	
 	/**
 	 * 0 - not payed
@@ -95,13 +100,13 @@ public class OrderEntity {
 	 * A list with the details about the customer, the shipping and the billing addresses.
 	 * Optional. List.
 	 */
-	@OneToOne
+	@OneToOne(mappedBy="order",cascade = {CascadeType.ALL},fetch=FetchType.EAGER)	
 	private CustomerEntity customer;
 	
 	/**
 	 * A list describing the products in the order.
 	 */
-	@OneToMany(mappedBy="order")
+	@OneToMany(mappedBy="order",cascade = {CascadeType.ALL},fetch=FetchType.EAGER)
 	private List<OrderItemEntity> orderItems;
 	
 	/**
@@ -146,11 +151,11 @@ public class OrderEntity {
 		this.status = status;
 	}
 
-	public Integer getPaymentMode() {
+	public String getPaymentMode() {
 		return paymentMode;
 	}
 
-	public void setPaymentMode(Integer paymentMode) {
+	public void setPaymentMode(String paymentMode) {
 		this.paymentMode = paymentMode;
 	}
 
@@ -163,11 +168,11 @@ public class OrderEntity {
 	}
 
 	public String getDate() {
-		return date;
+		return createDate;
 	}
 
 	public void setDate(String date) {
-		this.date = date;
+		this.createDate = date;
 	}
 
 	public Integer getPaymentStatus() {
@@ -249,12 +254,22 @@ public class OrderEntity {
 	public void setInvoice(InvoiceEntity invoice) {
 		this.invoice = invoice;
 	}
+	
+	
+
+	public Integer getPaymentModeId() {
+		return paymentModeId;
+	}
+
+	public void setPaymentModeId(Integer paymentModeId) {
+		this.paymentModeId = paymentModeId;
+	}
 
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", status=" + status + ", paymentMode="
 				+ paymentMode + ", observation=" + observation + ", date="
-				+ date + ", paymentStatus=" + paymentStatus + ", shippingTax="
+				+ createDate + ", paymentStatus=" + paymentStatus + ", shippingTax="
 				+ shippingTax + ", details=" + details + ", customer="
 				+ customer + ", orderItems=" + orderItems + ", vouchers="
 				+ vouchers + ", proforms=" + proforms + ", shipment="
@@ -267,7 +282,7 @@ public class OrderEntity {
 		int result = 1;
 		result = prime * result
 				+ ((customer == null) ? 0 : customer.hashCode());
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
 		result = prime * result + ((details == null) ? 0 : details.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((invoice == null) ? 0 : invoice.hashCode());
@@ -305,10 +320,10 @@ public class OrderEntity {
 				return false;
 		} else if (!customer.equals(other.customer))
 			return false;
-		if (date == null) {
-			if (other.date != null)
+		if (createDate == null) {
+			if (other.createDate != null)
 				return false;
-		} else if (!date.equals(other.date))
+		} else if (!createDate.equals(other.createDate))
 			return false;
 		if (details == null) {
 			if (other.details != null)

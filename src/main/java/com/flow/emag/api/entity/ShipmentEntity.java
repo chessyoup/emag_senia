@@ -20,8 +20,8 @@ public class ShipmentEntity {
 	@Column(name="awb_number")
 	private String awb_number;
 	
-	@Column
-	private String date;
+	@Column(name="create_date")
+	private String createDate;
 
 	public Long getId() {
 		return id;
@@ -40,17 +40,17 @@ public class ShipmentEntity {
 	}
 
 	public String getDate() {
-		return date;
+		return createDate;
 	}
 
 	public void setDate(String date) {
-		this.date = date;
+		this.createDate = date;
 	}
 
 	@Override
 	public String toString() {
 		return "Shipment [id=" + id + ", awb_number=" + awb_number + ", date="
-				+ date + "]";
+				+ createDate + "]";
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class ShipmentEntity {
 		int result = 1;
 		result = prime * result
 				+ ((awb_number == null) ? 0 : awb_number.hashCode());
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
@@ -78,10 +78,10 @@ public class ShipmentEntity {
 				return false;
 		} else if (!awb_number.equals(other.awb_number))
 			return false;
-		if (date == null) {
-			if (other.date != null)
+		if (createDate == null) {
+			if (other.createDate != null)
 				return false;
-		} else if (!date.equals(other.date))
+		} else if (!createDate.equals(other.createDate))
 			return false;
 		if (id == null) {
 			if (other.id != null)

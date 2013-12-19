@@ -43,7 +43,11 @@ public class Order {
 	 */	
 	@SerializedName("payment_mode_id")
 	@Expose
-	private Integer paymentMode;
+	private Integer paymentModeId;
+	
+	@SerializedName("payment_mode")
+	@Expose
+	private String paymentMode;
 	
 	/**
 	 * Additional customer notes
@@ -139,12 +143,22 @@ public class Order {
 		this.status = status;
 	}
 
-	public Integer getPaymentMode() {
+	public String getPaymentMode() {
 		return paymentMode;
 	}
 
-	public void setPaymentMode(Integer paymentMode) {
+	public void setPaymentMode(String paymentMode) {
 		this.paymentMode = paymentMode;
+	}
+	
+	
+	
+	public Integer getPaymentModeId() {
+		return paymentModeId;
+	}
+
+	public void setPaymentModeId(Integer paymentModeId) {
+		this.paymentModeId = paymentModeId;
 	}
 
 	public String getObservation() {

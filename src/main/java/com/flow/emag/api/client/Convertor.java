@@ -6,17 +6,31 @@ import java.util.List;
 import com.flow.emag.api.entity.BrandEntity;
 import com.flow.emag.api.entity.CategoryCharacteristicEntity;
 import com.flow.emag.api.entity.CategoryEntity;
+import com.flow.emag.api.entity.CustomerEntity;
 import com.flow.emag.api.entity.ImageEntity;
+import com.flow.emag.api.entity.InvoiceEntity;
+import com.flow.emag.api.entity.OrderDetailEntity;
+import com.flow.emag.api.entity.OrderEntity;
+import com.flow.emag.api.entity.OrderItemEntity;
 import com.flow.emag.api.entity.ProductCharacteristicValueEntity;
 import com.flow.emag.api.entity.ProductEntity;
 import com.flow.emag.api.entity.ProductOfferEntity;
+import com.flow.emag.api.entity.ProformaEntity;
+import com.flow.emag.api.entity.VoucherEntity;
 import com.flow.emag.api.model.Brand;
 import com.flow.emag.api.model.Category;
 import com.flow.emag.api.model.CategoryCharacteristic;
+import com.flow.emag.api.model.Customer;
 import com.flow.emag.api.model.Image;
+import com.flow.emag.api.model.Invoice;
+import com.flow.emag.api.model.Order;
+import com.flow.emag.api.model.OrderDetail;
+import com.flow.emag.api.model.OrderItem;
 import com.flow.emag.api.model.Product;
 import com.flow.emag.api.model.ProductOffer;
 import com.flow.emag.api.model.ProductsCharacteristic;
+import com.flow.emag.api.model.Proforma;
+import com.flow.emag.api.model.Voucher;
 
 public class Convertor {
 
@@ -183,5 +197,109 @@ public class Convertor {
 		}
 
 		return model;
+	}
+
+	public static Object orderModelToEntity(Order order) {
+		OrderEntity entity = new OrderEntity(); 
+		entity.setCustomer(customerModelToEntity(order.getCustomer(),entity));
+		entity.setDate(order.getDate());
+		entity.setDetails(orderDetailsModesToEntity(order.getDetails()));
+		entity.setEmagId(order.getEmagId());
+		entity.setInvoice(invoiceModelToEntity(order.getInvoice()));
+		entity.setObservation(order.getObservation());
+		entity.setOrderItems(orderItemToEntity(order.getOrderItems(),entity));
+		entity.setPaymentMode(order.getPaymentMode());
+		entity.setPaymentModeId(order.getPaymentModeId());
+		entity.setPaymentStatus(order.getPaymentStatus());
+		entity.setProforms(proformsToEntity(order.getProforms(),order));
+		entity.setStatus(order.getStatus());
+		entity.setVouchers(vouchersToEntity(order.getVouchers(),order));
+		
+		return entity;
+	}
+
+	private static List<VoucherEntity> vouchersToEntity(List<Voucher> vouchers,
+			Order order) {		
+		
+		return null;
+	}
+
+	private static List<ProformaEntity> proformsToEntity(
+			List<Proforma> proforms, Order order) {
+ 
+		return null;
+	}
+
+	private static List<OrderItemEntity> orderItemToEntity(
+			List<OrderItem> orderItems , OrderEntity orderEntity) {
+		
+		List<OrderItemEntity> list = new ArrayList<OrderItemEntity>();
+		
+		for(OrderItem model : orderItems){
+			OrderItemEntity entity = new OrderItemEntity();
+			entity.setCreated(model.getCreated());
+			entity.setOrder(orderEntity);
+			entity.setProductSeniaId(model.getProductSeniaId());
+			entity.setProductEmagId(model.getEmagId());
+			entity.setQuantity(model.getQuantity());
+			entity.setSalePrice(model.getSalePrice());
+			entity.setStatus(model.getStatus());
+			entity.setVatRate(model.getVatRate());
+			entity.setModified(model.getModified());			
+			entity.setOrder(orderEntity);
+			
+			list.add(entity);
+		}
+		
+		return list;
+	}
+
+	private static InvoiceEntity invoiceModelToEntity(Invoice invoice) {
+		InvoiceEntity entity = new InvoiceEntity();
+		
+		return null;
+	}
+
+	private static List<OrderDetailEntity> orderDetailsModesToEntity(
+			List<OrderDetail> details) {
+		
+		List<OrderDetailEntity> list = new ArrayList<OrderDetailEntity>();
+		
+		return null;
+	}
+
+	private static CustomerEntity customerModelToEntity(Customer customer,OrderEntity orderEntity) {
+		CustomerEntity entity = new CustomerEntity();
+		entity.setBank(customer.getBank());
+		entity.setBillingCity(customer.getBillingCity());
+		entity.setBillingCountry(customer.getBillingCountry());
+		entity.setBillingPostalCode(customer.getBillingPostalCode());
+		entity.setBillingStreet(customer.getBillingStreet());
+		entity.setBillingSuburb(customer.getBillingStreet());
+		entity.setCode(customer.getCode());
+		entity.setCompany(customer.getCompany());
+		entity.setCreated(customer.getCreated());
+		entity.setEmail(customer.getEmail());
+		entity.setFax(customer.getFax());
+		entity.setGender(customer.getGender());
+		entity.setIban(customer.getIban());
+		entity.setEmagId(customer.getId());
+		entity.setIsJuridical(customer.isJuridical);
+		entity.setIsVatPayer(customer.isVatPayer);
+		entity.setMktId(customer.getMktId());
+		entity.setModified(customer.getModified());
+		entity.setName(customer.getName());
+		entity.setPhone_1(customer.getPhone_1());
+		entity.setPhone_2(customer.getPhone_2());
+		entity.setPhone_3(customer.getPhone_3());
+		entity.setRegistration_number(customer.getRegistration_number());
+		entity.setShippingCity(customer.getShippingCity());
+		entity.setShippingCountry(customer.getShippingCountry());
+		entity.setShippingPostal_Code(customer.getShippingPostal_Code());
+		entity.setShippingStreet(customer.getShippingStreet());
+		entity.setShippingSuburb(customer.getShippingSuburb());
+		entity.setOrder(orderEntity);
+		
+		return entity;
 	}
 }

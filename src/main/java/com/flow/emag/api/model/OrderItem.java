@@ -1,162 +1,154 @@
 package com.flow.emag.api.model;
 
 import java.math.BigDecimal;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
+import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity
-@Table( name = "order_items" )
 public class OrderItem {
 	
-	@Id
-	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
 	@SerializedName("id")
-	private Long id;
-	
-	@OneToOne
-	private Order order;
-	
-	/**
-	 * Products emag id ?
-	 */
-	@Column(name="product_id")
-	@SerializedName("product_emag_id")
+	private String emagId;
+			
+	@SerializedName("product_id")
 	@Expose
-	private Integer productEmagId;
+	private String productSeniaId;
 	
-	@Column
+	@SerializedName("part_number")
+	@Expose
+	private String partNumber;
+		
 	@SerializedName("quantity")
 	@Expose
 	private Integer quantity;
-	
-	@Column(name="sale_price")
+		
 	@SerializedName("sale_price")
 	@Expose
 	private BigDecimal salePrice;
-	
-	@Column(name="vat_rate")
+		
 	@SerializedName("vat_rate")
 	@Expose
 	private BigDecimal vatRate;
 	
 	/**
 	 * Ex: 2011-06-06 15:04:52
-	 */
-	@Column
+	 */	
 	@SerializedName("created")
 	@Expose
 	private String created;
 	
 	/**
 	 * Ex: 2011-06-06 15:04:52
-	 */
-	@Column
+	 */	
 	@SerializedName("modified")
 	@Expose
 	private String modified;
-			
+		
+	@SerializedName("currency")
+	@Expose
+	private String currency;
+	
+	@SerializedName("details")
+	@Expose
+	private List<String> details;
 	/**
 	 * Order status
 	 * 1 - for OK ?
-	 */
-	@Column
+	 */	
 	@SerializedName("status")
 	@Expose
 	private Integer status;
-
-	public Long getId() {
-		return id;
+	public String getEmagId() {
+		return emagId;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public void setEmagId(String emagId) {
+		this.emagId = emagId;
 	}
-
-	public Integer getProductEmagId() {
-		return productEmagId;
+	public String getProductSeniaId() {
+		return productSeniaId;
 	}
-
-	public void setProductEmagId(Integer productEmagId) {
-		this.productEmagId = productEmagId;
+	public void setProductSeniaId(String productSeniaId) {
+		this.productSeniaId = productSeniaId;
 	}
-
+	public String getPartNumber() {
+		return partNumber;
+	}
+	public void setPartNumber(String partNumber) {
+		this.partNumber = partNumber;
+	}
 	public Integer getQuantity() {
 		return quantity;
 	}
-
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-
 	public BigDecimal getSalePrice() {
 		return salePrice;
 	}
-
 	public void setSalePrice(BigDecimal salePrice) {
 		this.salePrice = salePrice;
 	}
-
 	public BigDecimal getVatRate() {
 		return vatRate;
 	}
-
 	public void setVatRate(BigDecimal vatRate) {
 		this.vatRate = vatRate;
 	}
-
 	public String getCreated() {
 		return created;
 	}
-
 	public void setCreated(String created) {
 		this.created = created;
 	}
-
 	public String getModified() {
 		return modified;
 	}
-
 	public void setModified(String modified) {
 		this.modified = modified;
 	}
-
+	public String getCurrency() {
+		return currency;
+	}
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+	public List<String> getDetails() {
+		return details;
+	}
+	public void setDetails(List<String> details) {
+		this.details = details;
+	}
 	public Integer getStatus() {
 		return status;
 	}
-
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
-	public Order getOrder() {
-		return order;
+	@Override
+	public String toString() {
+		return "OrderItem [emagId=" + emagId + ", productSeniaId="
+				+ productSeniaId + ", partNumber=" + partNumber + ", quantity="
+				+ quantity + ", salePrice=" + salePrice + ", vatRate="
+				+ vatRate + ", created=" + created + ", modified=" + modified
+				+ ", currency=" + currency + ", details=" + details
+				+ ", status=" + status + "]";
 	}
-
-	public void setOrder(Order order) {
-		this.order = order;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((created == null) ? 0 : created.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((currency == null) ? 0 : currency.hashCode());
+		result = prime * result + ((details == null) ? 0 : details.hashCode());
+		result = prime * result + ((emagId == null) ? 0 : emagId.hashCode());
 		result = prime * result
 				+ ((modified == null) ? 0 : modified.hashCode());
 		result = prime * result
-				+ ((productEmagId == null) ? 0 : productEmagId.hashCode());
+				+ ((partNumber == null) ? 0 : partNumber.hashCode());
+		result = prime * result
+				+ ((productSeniaId == null) ? 0 : productSeniaId.hashCode());
 		result = prime * result
 				+ ((quantity == null) ? 0 : quantity.hashCode());
 		result = prime * result
@@ -165,7 +157,6 @@ public class OrderItem {
 		result = prime * result + ((vatRate == null) ? 0 : vatRate.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -180,20 +171,35 @@ public class OrderItem {
 				return false;
 		} else if (!created.equals(other.created))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (currency == null) {
+			if (other.currency != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!currency.equals(other.currency))
+			return false;
+		if (details == null) {
+			if (other.details != null)
+				return false;
+		} else if (!details.equals(other.details))
+			return false;
+		if (emagId == null) {
+			if (other.emagId != null)
+				return false;
+		} else if (!emagId.equals(other.emagId))
 			return false;
 		if (modified == null) {
 			if (other.modified != null)
 				return false;
 		} else if (!modified.equals(other.modified))
 			return false;
-		if (productEmagId == null) {
-			if (other.productEmagId != null)
+		if (partNumber == null) {
+			if (other.partNumber != null)
 				return false;
-		} else if (!productEmagId.equals(other.productEmagId))
+		} else if (!partNumber.equals(other.partNumber))
+			return false;
+		if (productSeniaId == null) {
+			if (other.productSeniaId != null)
+				return false;
+		} else if (!productSeniaId.equals(other.productSeniaId))
 			return false;
 		if (quantity == null) {
 			if (other.quantity != null)
@@ -216,13 +222,5 @@ public class OrderItem {
 		} else if (!vatRate.equals(other.vatRate))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "OrderItem [id=" + id + ", productEmagId=" + productEmagId
-				+ ", quantity=" + quantity + ", salePrice=" + salePrice
-				+ ", vatRate=" + vatRate + ", created=" + created
-				+ ", modified=" + modified + ", status=" + status + "]";
 	}			
 }	

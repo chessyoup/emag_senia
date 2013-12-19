@@ -27,7 +27,10 @@ public class OrderItemEntity {
 	 * Products emag id ?
 	 */
 	@Column(name="product_id")	
-	private Integer productEmagId;
+	private String productSeniaId;
+	
+	@Column(name="prduct_emag_id")	
+	private String productEmagId;
 	
 	@Column
 	private Integer quantity;
@@ -47,7 +50,7 @@ public class OrderItemEntity {
 	/**
 	 * Ex: 2011-06-06 15:04:52
 	 */
-	@Column
+	@Column(name="modified_date")
 	private String modified;
 			
 	/**
@@ -65,11 +68,11 @@ public class OrderItemEntity {
 		this.id = id;
 	}
 
-	public Integer getProductEmagId() {
+	public String getProductEmagId() {
 		return productEmagId;
 	}
 
-	public void setProductEmagId(Integer productEmagId) {
+	public void setProductEmagId(String productEmagId) {
 		this.productEmagId = productEmagId;
 	}
 
@@ -127,6 +130,16 @@ public class OrderItemEntity {
 
 	public void setOrder(OrderEntity order) {
 		this.order = order;
+	}
+	
+	
+	
+	public String getProductSeniaId() {
+		return productSeniaId;
+	}
+
+	public void setProductSeniaId(String productSeniaId) {
+		this.productSeniaId = productSeniaId;
 	}
 
 	@Override

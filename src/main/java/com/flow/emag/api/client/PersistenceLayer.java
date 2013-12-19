@@ -78,7 +78,7 @@ public class PersistenceLayer {
 				.setProperty("hibernate.connection.url",
 						Environment.getProperty("hibernate.connection.url"))
 				.setProperty("hibernate.connection.pool_size", Environment.getProperty("hibernate.connection.pool_size"));
-//		 .setProperty("hibernate.hbm2ddl.auto", Environment.getProperty(""));
+//		 .setProperty("hibernate.hbm2ddl.auto", Environment.getProperty("hibernate.hbm2ddl.auto"));
 
 		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
 				.applySettings(config.getProperties()).buildServiceRegistry();
@@ -101,7 +101,8 @@ public class PersistenceLayer {
 	public void closeSession() {
 		try {
 			if (this.session != null) {
-				this.session.close();
+				this.session.disconnect();
+				this.session.close();				
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Error on closing the session :", e);
@@ -135,17 +136,18 @@ public class PersistenceLayer {
 	public String save(Object entity) {
 		LOG.info("save :: " + entity.toString());
 
+		Transaction tx = null;
 		try {
-			Transaction tx = session.beginTransaction();
+			tx = session.beginTransaction();
 			Serializable id = session.save(entity);
-			LOG.info("entity id  " + id.toString());
-			session.flush();
+			LOG.info("entity id  " + id.toString());			
+			session.flush();			
 			tx.commit();
 			return id.toString();
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, "Error on saving :" + entity.toString(), e);
 			return null;
-		}
+		}		
 	}
 
 	public void update(Object entity) {

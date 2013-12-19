@@ -63,15 +63,23 @@ public class EmagAPIClient {
 
 	public <T> ApiResponse<T> readResourceByEmagId(Class<T> resourceClass,
 			String emagId) throws Exception {
+		return readResourceByEmagId(resourceClass,emagId,"emag_id");
+	}
+	
+	public <T> ApiResponse<T> readResourceByEmagId(Class<T> resourceClass,
+			String emagId , String idKey) throws Exception {
 		Map<String, String> data = new HashMap<String, String>();
-		data.put("emag_id", emagId);
+		data.put(idKey, emagId);
 		HttpPost post = buildPost(Util.getEmagResourceName(resourceClass),
 				data, null, EmagAction.READ);
 		HttpResponse response = httpclient.execute(post);
 		String json = Util.getJsonFromReponse(response);
 		LOG.info("Http reponse :" + response.getStatusLine() + " , json :"
 				+ json);
-		return GSON.fromJson(json, getType(resourceClass.getSimpleName()));
+		ApiResponse<T>  apiResponse = GSON.fromJson(json, getType(resourceClass.getSimpleName()));
+		apiResponse.setSourceJson(json);
+		
+		return apiResponse;
 	}
 
 	public <T> ApiResponse<T> readResources(Class<T> resourceClass,
@@ -82,7 +90,11 @@ public class EmagAPIClient {
 		String json = Util.getJsonFromReponse(response);
 		LOG.info("Http reponse :" + response.getStatusLine() + " , json :"
 				+ json);
-		return GSON.fromJson(json, getType(resourceClass.getSimpleName()));
+		
+		ApiResponse<T>  apiResponse = GSON.fromJson(json, getType(resourceClass.getSimpleName()));
+		apiResponse.setSourceJson(json);
+		
+		return apiResponse;
 	}
 
 	public ApiCountResponse countResource(Class resourceClass) throws Exception {
@@ -92,7 +104,11 @@ public class EmagAPIClient {
 		String json = Util.getJsonFromReponse(response);
 		LOG.info("Http reponse :" + response.getStatusLine());
 		LOG.info("Reponse json :" + json);
-		return GSON.fromJson(json.toString(), ApiCountResponse.class);
+		
+		ApiCountResponse  apiResponse = GSON.fromJson(json.toString(), ApiCountResponse.class);
+		apiResponse.setSourceJson(json);
+		
+		return apiResponse;
 	}
 
 	private HttpPost buildPost(String resource, Object inputData,
@@ -158,5 +174,16 @@ public class EmagAPIClient {
 		} else {
 			return null;
 		}
+	}
+	
+	public static void main(String[] args) {
+		try {
+			EmagAPIClient.getClient().countResource(Order.class);
+			System.out.println(EmagAPIClient.getClient().readResourceByEmagId(Order.class, "1323423423423","id"));	
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 }
